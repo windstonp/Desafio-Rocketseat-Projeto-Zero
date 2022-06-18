@@ -1,1 +1,27 @@
-// TODO
+.postTitle{
+  font-size: 24px;
+  font-family: inter, sans-serif;
+  margin-bottom: 15px;
+}
+.postSubtitle{
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--gray-300)
+}
+.postDetail{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  time{
+    color: var(--gray-300);
+    margin-right: 15px;
+  }
+  p{
+    color: var(--gray-300)
+  }
+  svg{
+    margin-right: 15px;
+    color: var(--gray-300)
+  }
+
+}
