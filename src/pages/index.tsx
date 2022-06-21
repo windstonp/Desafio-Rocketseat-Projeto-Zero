@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -30,6 +31,17 @@ interface HomeProps {
 
 export default function Home({ postsPagination }: HomeProps): JSX.Element {
   const [postPaginationData, setPostPaginationData] = useState(postsPagination);
+  async function handleLoadMore() {
+    try {
+      const response: PostPagination = await fetch(
+        postPaginationData.next_page
+      ).then(res => res.json());
+      response.results = [...postPaginationData.results, ...response.results];
+      setPostPaginationData(response);
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
   return (
     <>
       <Head>
@@ -38,7 +50,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
       <main className={styles.container}>
         <div className={styles.posts}>
           {postPaginationData.results.map(post => (
-            <Link href={`posts/${post.uid}`} key={post.uid}>
+            <Link href={`post/${post.uid}`} key={post.uid}>
               <a>
                 <strong className={commonStyles.postTitle}>
                   {post.data.title}
@@ -72,7 +84,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
             type="button"
             onClick={handleLoadMore}
           >
-            Carregar mais.
+            Carregar mais posts
           </button>
         )}
       </main>
